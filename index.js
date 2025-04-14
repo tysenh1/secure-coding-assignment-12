@@ -32,6 +32,7 @@ app.get("/", (req, res) => res.send("Express on Vercel"));
 // ===================================================================== //
 // ===================================================================== //
 
+// Queries all rows could cause a DOS if data is large enough
 app.get('/issues', (req, res) => {
     db.getIssues()
     .then(response => {
@@ -41,7 +42,7 @@ app.get('/issues', (req, res) => {
         res.status(500).send(error);
     })
 })
-
+// No input Validation / Sanitization
 app.post('/issues', (req, res) => {
     db.createIssue(req.body)
     .then(response => {
@@ -51,7 +52,7 @@ app.post('/issues', (req, res) => {
         res.status(500).send(error);
     })
 })
-
+// No input Validation / Sanitization
 app.delete('/issues/:id', (req, res) => {
     db.deleteIssue(req.params.id)
     .then(response => {
@@ -61,7 +62,7 @@ app.delete('/issues/:id', (req, res) => {
       res.status(500).send(error);
     })
 })
-
+// No input Validation / Sanitization
 app.put('/issues/:id', (req, res) => {
     const id = req.params.id;
     const body = req.body;
@@ -88,6 +89,7 @@ app.get('/issues/:id', db.getIssueById)
 // ===================================================================== //
 // ===================================================================== //
 
+// Queries all rows could cause a DOS if data is large enough
 app.get('/incidents', (req, res) => {
     db.getIncidents()
     .then(response => {

@@ -1,10 +1,11 @@
 const Pool = require('pg').Pool
 
-
+// Credentials Hardcoded in plain text
 const pool = new Pool({
     connectionString: 'postgres://pioplpdx:uqp9SZN7ecb9tZRsRIn9B2M328vKPyHD@isilo.db.elephantsql.com/pioplpdx'
 })
 
+// No input validation: You could use Joi here or smthn
 pool.query(`
   CREATE TABLE IF NOT EXISTS issues (
     id SERIAL PRIMARY KEY,
@@ -22,6 +23,7 @@ pool.query(`
   }
 });
 
+// No input validation: You could use Joi here or smthn
 pool.query(`
   CREATE TABLE IF NOT EXISTS incidents (
     id SERIAL PRIMARY KEY,
@@ -40,6 +42,7 @@ pool.query(`
   }
 });
 
+// No input validation: You could use Joi here or smthn
 pool.query(`
   CREATE TABLE IF NOT EXISTS problems (
     id SERIAL PRIMARY KEY,
@@ -62,6 +65,7 @@ pool.query(`
 // =========================== Issues queries ========================== //
 // ===================================================================== //
 
+// Queries all rows could cause a DOS if data is large enough
 const getIssues = async () => {
     try {
         return await new Promise(function (resolve, reject) {
@@ -82,6 +86,7 @@ const getIssues = async () => {
     }
 }
 
+// No input Validation / Sanitization
 const getIssueById = (request, response) => {
     const id = parseInt(request.params.id)
 
@@ -94,7 +99,7 @@ const getIssueById = (request, response) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const createIssue = (body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, fix, notes } = body;
@@ -117,7 +122,7 @@ const createIssue = (body) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const deleteIssue = (id) => {
     return new Promise(function (resolve, reject) {
         pool.query(
@@ -133,7 +138,7 @@ const deleteIssue = (id) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const updateIssue = (id, body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, fix, notes } = body;
@@ -153,7 +158,7 @@ const updateIssue = (id, body) => {
         );
     });
 };
-
+// No input Validation / Sanitization
 const getIssuesId = (request, response) => {
     pool.query('SELECT id FROM issues ORDER BY id ASC', (error, results) => {
         if (error) {
@@ -168,6 +173,7 @@ const getIssuesId = (request, response) => {
 // ========================== Incident queries ========================= //
 // ===================================================================== //
 
+// Queries all rows could cause a DOS if data is large enough
 const getIncidents = async () => {
     try {
         return await new Promise(function (resolve, reject) {
@@ -188,6 +194,7 @@ const getIncidents = async () => {
     }
 }
 
+// No input Validation / Sanitization
 const getIncidentById = (request, response) => {
     const id = parseInt(request.params.id)
 
@@ -200,7 +207,7 @@ const getIncidentById = (request, response) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const createIncident = (body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, systems_affected, fix, notes } = body;
@@ -223,7 +230,7 @@ const createIncident = (body) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const deleteIncident= (id) => {
     return new Promise(function (resolve, reject) {
         pool.query(
@@ -239,7 +246,7 @@ const deleteIncident= (id) => {
     })
 }
 
-
+// No input Validation / Sanitization
 const updateIncident = (id, body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, systems_affected, fix, notes } = body;
@@ -260,6 +267,7 @@ const updateIncident = (id, body) => {
     });
 };
 
+// No input Validation / Sanitization
 const getIncidentsId = (request, response) => {
     pool.query('SELECT id FROM incidents ORDER BY id ASC', (error, results) => {
         if (error) {
@@ -274,6 +282,7 @@ const getIncidentsId = (request, response) => {
 // ========================== Problems Queries ========================= //
 // ===================================================================== //
 
+// Queries all rows could cause a DOS if data is large enough
 const getProblems = async () => {
     try {
         return await new Promise(function (resolve, reject) {
@@ -293,7 +302,7 @@ const getProblems = async () => {
         throw new Error("Internal server error")
     }
 }
-
+// No input Validation / Sanitization
 const getProblemById = (request, response) => {
     const id = parseInt(request.params.id)
 
@@ -305,7 +314,7 @@ const getProblemById = (request, response) => {
         
     })
 }
-
+// No input Validation / Sanitization
 const createProblem = (body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, incidents, fix, notes } = body;
@@ -327,7 +336,7 @@ const createProblem = (body) => {
         )
     })
 }
-
+// No input Validation / Sanitization
 const deleteProblem= (id) => {
     return new Promise(function (resolve, reject) {
         pool.query(
@@ -342,7 +351,7 @@ const deleteProblem= (id) => {
         )
     })
 }
-
+// No input Validation / Sanitization
 const updateProblem = (id, body) => {
     return new Promise(function (resolve, reject) {
         const { summary, category, description, incidents, fix, notes } = body;
@@ -362,7 +371,7 @@ const updateProblem = (id, body) => {
         );
     });
 };
-
+// No input Validation / Sanitization
 const getProblemsId = (request, response) => {
     pool.query('SELECT id FROM problems ORDER BY id ASC', (error, results) => {
         if (error) {
